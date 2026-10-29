@@ -1,6 +1,8 @@
 package com.mycompany.antonioluis_villalba_ad1_e1.controlador;
 
+import com.mycompany.antonioluis_villalba_ad1_e1.modelo.Cliente;
 import com.mycompany.antonioluis_villalba_ad1_e1.vista.InterfazPrincipal;
+import com.mycompany.antonioluis_villalba_ad1_e1.vista.ModalAltaCliente;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -12,49 +14,102 @@ import java.util.Scanner;
 
 public class ControladorClientes {
     private static final String NOMBRE_FICHERO = "clientes.dat";
+    
+    private InterfazPrincipal interfazPrincipal;
 
     public void gestionarClientes() {
-        InterfazPrincipal interfazPrincipal = new InterfazPrincipal(this);
-        interfazPrincipal.setVisible(true);
+        this.interfazPrincipal = new InterfazPrincipal(this);
+        this.interfazPrincipal.setVisible(true);
     }
     
-    private static void altaCliente(Scanner scanner) {
-        System.out.println("\n--- Alta de Nuevo Cliente ---");
+    public void solicitarDatosNuevoCliente() {
+        ModalAltaCliente modalAltaCliente = new ModalAltaCliente(
+                this.interfazPrincipal, this, new Cliente());
+        
+        modalAltaCliente.setVisible(true);
+    }
+    
+    public boolean nombreClienteValido(String nombreCompleto){
+        if (nombreCompleto.isEmpty()) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean anioNacimientoValido(String anioNacimiento) {
+        if (anioNacimiento.isEmpty()) {
+            return false;
+        }
+        
+        int anio = 0;
         
         try {
-            System.out.print("Nombre completo: ");
-            String nombre = scanner.nextLine().trim();
-            if (nombre.isEmpty()) throw new IllegalArgumentException("El nombre no puede estar vacío.");
+            anio = Integer.parseInt(anioNacimiento);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+        if (anio < 1900 || anio > 2026) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean provinciaValida(String provincia) {
+        if (provincia.isEmpty()) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean totalComprasValido(String totalCompras) {
+        if (totalCompras.isEmpty()) {
+            return false;
+        }
+        
+        double total = 0;
+        
+        try {
+            total = Double.parseDouble(totalCompras);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        
+        if (total < 0) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean altaCliente(Cliente nuevoCliente) {        
+        try {
+            if (nuevoCliente.getNombreCompleto().isEmpty()) {
+                throw new IllegalArgumentException("El nombre no puede estar vacío.");
+            }
 
-            System.out.print("Año de nacimiento: ");
-            int anioNacimiento = Integer.parseInt(scanner.nextLine());
-            if (anioNacimiento < 1900 || anioNacimiento > 2026) {
+            if (nuevoCliente.getAnioNacimiento() < 1900 || nuevoCliente.getAnioNacimiento() > 2026) {
                 throw new IllegalArgumentException("Año de nacimiento inválido.");
             }
 
-            System.out.print("Provincia: ");
-            String provincia = scanner.nextLine().trim();
-            if (provincia.isEmpty()) throw new IllegalArgumentException("La provincia no puede estar vacía.");
-
-            System.out.print("¿Es cliente premium? (true/false): ");
-            String premiumInput = scanner.nextLine().trim().toLowerCase();
-            if (!premiumInput.equals("true") && !premiumInput.equals("false")) {
-                throw new IllegalArgumentException("Debe ingresar obligatoriamente 'true' o 'false'.");
+            if (nuevoCliente.getProvincia().isEmpty()) {
+                throw new IllegalArgumentException("La provincia no puede estar vacía.");
             }
-            boolean esPremium = Boolean.parseBoolean(premiumInput);
 
-            System.out.print("Total compras (€): ");
-            double totalCompras = Double.parseDouble(scanner.nextLine());
-            if (totalCompras < 0) throw new IllegalArgumentException("El total de compras no puede ser negativo.");
+            if (nuevoCliente.getTotalCompras() < 0) {
+                throw new IllegalArgumentException("El total de compras no puede ser negativo.");
+            }
 
             // Guardado directo en el fichero. 
-            // El segundo parámetro 'true' activa el modo 'append' (añadir al final)
             try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(NOMBRE_FICHERO, true))) {
-                dos.writeUTF(nombre);
-                dos.writeInt(anioNacimiento);
-                dos.writeUTF(provincia);
-                dos.writeBoolean(esPremium);
-                dos.writeDouble(totalCompras);
+                dos.writeUTF(nuevoCliente.getNombreCompleto());
+                dos.writeInt(nuevoCliente.getAnioNacimiento());
+                dos.writeUTF(nuevoCliente.getProvincia());
+                dos.writeBoolean(nuevoCliente.isPremium());
+                dos.writeDouble(nuevoCliente.getTotalCompras());
                 System.out.println("[INFO] Cliente guardado correctamente en el fichero.");
             }
 
@@ -65,9 +120,11 @@ public class ControladorClientes {
         } catch (IOException e) {
             System.out.println("[ERROR] Error al escribir en el archivo: " + e.getMessage());
         }
+        
+        return true;
     }
     
-    private static void mostrarClientes() {
+    public void mostrarClientes() {
         System.out.println("\n--- Listado de Clientes en Fichero ---");
         File file = new File(NOMBRE_FICHERO);
         
@@ -97,7 +154,7 @@ public class ControladorClientes {
         }
     }
     
-    private static void mostrarMayorComprador() {
+    public void mostrarMayorComprador() {
         System.out.println("\n--- Cliente con Mayor Volumen de Compras ---");
         File file = new File(NOMBRE_FICHERO);
         
