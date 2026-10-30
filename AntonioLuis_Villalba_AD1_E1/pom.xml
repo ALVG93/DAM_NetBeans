@@ -7,7 +7,7 @@
     <packaging>jar</packaging>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>21</maven.compiler.release>
+        <maven.compiler.release>26</maven.compiler.release>
         <exec.mainClass>com.mycompany.antonioluis_villalba_ad1_e1.AntonioLuis_Villalba_AD1_E1</exec.mainClass>
     </properties>
 </project>

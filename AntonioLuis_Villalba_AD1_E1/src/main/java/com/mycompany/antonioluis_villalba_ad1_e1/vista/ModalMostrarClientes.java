@@ -1,11 +1,11 @@
 package com.mycompany.antonioluis_villalba_ad1_e1.vista;
 
 import com.mycompany.antonioluis_villalba_ad1_e1.controlador.ControladorClientes;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class ModalMostrarClientes extends javax.swing.JDialog {
     private ControladorClientes controladorClientes;
+    private DefaultTableModel tabla;
     
     public ModalMostrarClientes(java.awt.Frame parent, ControladorClientes controladorClientes) {
         super(parent, ModalityType.APPLICATION_MODAL);
@@ -13,13 +13,26 @@ public class ModalMostrarClientes extends javax.swing.JDialog {
         
         this.controladorClientes = controladorClientes;
         
-        DefaultTableModel tabla = this.controladorClientes.cargarClientes();
+        String[] columnas = {"Nombre Completo", "Año Nacimiento", "Provincia", "¿Premium?", "Total Compras"};
+        this.tabla = new DefaultTableModel(columnas, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
         
-        if (tabla == null) {
-            dispose();
-        } else  {
-            this.jTableClientes = new JTable(tabla);
-        }
+        this.jTableClientes.setModel(tabla);
+        this.jTableClientes.setFillsViewportHeight(true);
+    }
+    
+    public void agregarFilaAtabla(Object[] fila) {
+        this.tabla.addRow(fila);
+    }
+    
+    public void recargarTabla() {
+        this.tabla.fireTableDataChanged();
+        this.jTableClientes.revalidate();
+        this.jTableClientes.repaint();
     }
 
     /**
@@ -53,7 +66,7 @@ public class ModalMostrarClientes extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

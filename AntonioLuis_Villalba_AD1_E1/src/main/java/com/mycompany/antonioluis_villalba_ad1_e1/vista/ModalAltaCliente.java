@@ -3,7 +3,6 @@ package com.mycompany.antonioluis_villalba_ad1_e1.vista;
 import com.mycompany.antonioluis_villalba_ad1_e1.controlador.ControladorClientes;
 import com.mycompany.antonioluis_villalba_ad1_e1.modelo.Cliente;
 import java.awt.Frame;
-import javax.swing.JOptionPane;
 
 public class ModalAltaCliente extends javax.swing.JDialog {
     private ControladorClientes controladorClientes;
