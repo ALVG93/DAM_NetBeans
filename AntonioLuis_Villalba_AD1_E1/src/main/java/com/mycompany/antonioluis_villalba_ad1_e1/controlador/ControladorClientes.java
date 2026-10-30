@@ -3,6 +3,7 @@ package com.mycompany.antonioluis_villalba_ad1_e1.controlador;
 import com.mycompany.antonioluis_villalba_ad1_e1.modelo.Cliente;
 import com.mycompany.antonioluis_villalba_ad1_e1.vista.InterfazPrincipal;
 import com.mycompany.antonioluis_villalba_ad1_e1.vista.ModalAltaCliente;
+import com.mycompany.antonioluis_villalba_ad1_e1.vista.ModalMostrarClientes;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
@@ -11,6 +12,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class ControladorClientes {
     private static final String NOMBRE_FICHERO = "clientes.dat";
@@ -31,6 +34,7 @@ public class ControladorClientes {
     
     public boolean nombreClienteValido(String nombreCompleto){
         if (nombreCompleto.isEmpty()) {
+            mostrarError("El nombre no puede estar vacío.");
             return false;
         }
         
@@ -39,6 +43,7 @@ public class ControladorClientes {
     
     public boolean anioNacimientoValido(String anioNacimiento) {
         if (anioNacimiento.isEmpty()) {
+            mostrarError("El año de nacimiento no puede estar vacía.");
             return false;
         }
         
@@ -47,10 +52,12 @@ public class ControladorClientes {
         try {
             anio = Integer.parseInt(anioNacimiento);
         } catch (NumberFormatException e) {
+            mostrarError("El año de nacimiento debe ser un número entero.");
             return false;
         }
         
         if (anio < 1900 || anio > 2026) {
+            mostrarError("El año de nacimiento debe ser mayor que 1900 y menor que 2026.");
             return false;
         }
         
@@ -59,6 +66,7 @@ public class ControladorClientes {
     
     public boolean provinciaValida(String provincia) {
         if (provincia.isEmpty()) {
+            mostrarError("La provincia no puede estar vacío.");
             return false;
         }
         
@@ -67,6 +75,7 @@ public class ControladorClientes {
     
     public boolean totalComprasValido(String totalCompras) {
         if (totalCompras.isEmpty()) {
+            mostrarError("El total de compras no puede estar vacío.");
             return false;
         }
         
@@ -75,10 +84,12 @@ public class ControladorClientes {
         try {
             total = Double.parseDouble(totalCompras);
         } catch (NumberFormatException e) {
+            mostrarError("El total de compras debe ser un número.");
             return false;
         }
         
         if (total < 0) {
+            mostrarError("El total de compras debe ser un número mayor que 0.");
             return false;
         }
         
@@ -87,50 +98,44 @@ public class ControladorClientes {
     
     public boolean altaCliente(Cliente nuevoCliente) {        
         try {
-            if (nuevoCliente.getNombreCompleto().isEmpty()) {
-                throw new IllegalArgumentException("El nombre no puede estar vacío.");
-            }
+            DataOutputStream dos = new DataOutputStream(new FileOutputStream(NOMBRE_FICHERO, true));
+            
+            dos.writeUTF(nuevoCliente.getNombreCompleto());
+            dos.writeInt(nuevoCliente.getAnioNacimiento());
+            dos.writeUTF(nuevoCliente.getProvincia());
+            dos.writeBoolean(nuevoCliente.isPremium());
+            dos.writeDouble(nuevoCliente.getTotalCompras());
 
-            if (nuevoCliente.getAnioNacimiento() < 1900 || nuevoCliente.getAnioNacimiento() > 2026) {
-                throw new IllegalArgumentException("Año de nacimiento inválido.");
-            }
-
-            if (nuevoCliente.getProvincia().isEmpty()) {
-                throw new IllegalArgumentException("La provincia no puede estar vacía.");
-            }
-
-            if (nuevoCliente.getTotalCompras() < 0) {
-                throw new IllegalArgumentException("El total de compras no puede ser negativo.");
-            }
-
-            // Guardado directo en el fichero. 
-            try (DataOutputStream dos = new DataOutputStream(new FileOutputStream(NOMBRE_FICHERO, true))) {
-                dos.writeUTF(nuevoCliente.getNombreCompleto());
-                dos.writeInt(nuevoCliente.getAnioNacimiento());
-                dos.writeUTF(nuevoCliente.getProvincia());
-                dos.writeBoolean(nuevoCliente.isPremium());
-                dos.writeDouble(nuevoCliente.getTotalCompras());
-                System.out.println("[INFO] Cliente guardado correctamente en el fichero.");
-            }
-
-        } catch (NumberFormatException e) {
-            System.out.println("[ERROR] Error de formato numérico: Asegúrese de ingresar valores válidos.");
-        } catch (IllegalArgumentException e) {
-            System.out.println("[ERROR] Validación fallida: " + e.getMessage());
+            mostrarInformacion("Cliente guardado correctamente en el fichero.");
         } catch (IOException e) {
-            System.out.println("[ERROR] Error al escribir en el archivo: " + e.getMessage());
+            mostrarError("Error al escribir en el fichero de clientes.");
         }
         
         return true;
     }
     
     public void mostrarClientes() {
-        System.out.println("\n--- Listado de Clientes en Fichero ---");
+        ModalMostrarClientes modalMostrarClientes = new ModalMostrarClientes(
+                this.interfazPrincipal, this);
+        
+        modalMostrarClientes.setVisible(true);
+    }
+   
+    public DefaultTableModel cargarClientes() {
+        String[] columnas = {"Nombre Completo", "Año Nacimiento", "Provincia", "¿Premium?", "Total Compras"};
+                
+        DefaultTableModel tabla = new DefaultTableModel(columnas, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; 
+            }
+        };
+        
         File file = new File(NOMBRE_FICHERO);
         
         if (!file.exists() || file.length() == 0) {
-            System.out.println("[INFO] El fichero no existe o está vacío. Registre clientes primero.");
-            return;
+            mostrarInformacion("El fichero no existe o está vacío. Registre clientes primero.");
+            return null;
         }
 
         int contador = 0;
@@ -192,5 +197,21 @@ public class ControladorClientes {
         } catch (IOException e) {
             System.out.println("[ERROR] Error al evaluar el fichero: " + e.getMessage());
         }
+    }
+    
+    private void mostrarError(String mensajeError) {
+        JOptionPane.showMessageDialog(
+                this.interfazPrincipal, 
+                mensajeError, 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+    }
+    
+    private void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(
+                this.interfazPrincipal, 
+                mensaje, 
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
     }
 }

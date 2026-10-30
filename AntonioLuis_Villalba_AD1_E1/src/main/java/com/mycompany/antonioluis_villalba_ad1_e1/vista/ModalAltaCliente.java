@@ -24,9 +24,6 @@ public class ModalAltaCliente extends javax.swing.JDialog {
     public boolean datosValidos() {
         if (!this.controladorClientes.nombreClienteValido(
                 this.jTextNombreCompleto.getText().trim())) {
-            
-            JOptionPane.showMessageDialog(this, "hola", "Error", JOptionPane.ERROR_MESSAGE);
-            
             return false;
         }
         
