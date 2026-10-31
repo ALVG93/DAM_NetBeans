@@ -97,7 +97,8 @@ public class ControladorClientes {
     
     public boolean altaCliente(Cliente nuevoCliente) {        
         try {
-            DataOutputStream dos = new DataOutputStream(new FileOutputStream(NOMBRE_FICHERO, true));
+            DataOutputStream dos = new DataOutputStream(
+                    new FileOutputStream(NOMBRE_FICHERO, true));
             
             dos.writeUTF(nuevoCliente.getNombreCompleto());
             dos.writeInt(nuevoCliente.getAnioNacimiento());
@@ -124,31 +125,23 @@ public class ControladorClientes {
         this.modalMostrarClientes.setVisible(true);
     }
    
-    public void cargarClientes() {        
-        File file = new File(NOMBRE_FICHERO);
-        
-        if (!file.exists() || file.length() == 0) {
-            mostrarInformacion("El fichero no existe o está vacío. Registre clientes primero.");
-            return;
-        }
+    public void cargarClientes() {
+        File fichero = cargarFichero();
 
-        Cliente cliente = new Cliente();
+        if(fichero == null) {
+            return;
+        } 
         
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(NOMBRE_FICHERO))) {
+        Cliente clienteLeido = new Cliente();
+        
+        try {
+            DataInputStream dataInputStream = new DataInputStream(
+                    new FileInputStream(NOMBRE_FICHERO));
+                    
             while (true) {
-                cliente.setNombreCompleto(dis.readUTF());
-                cliente.setAnioNacimiento(dis.readInt());
-                cliente.setProvincia(dis.readUTF());
-                cliente.setPremium(dis.readBoolean());
-                cliente.setTotalCompras(dis.readDouble());
+                leerCliente(dataInputStream, clienteLeido);
                 
-                Object[] fila = {
-                    cliente.getNombreCompleto(),
-                    cliente.getAnioNacimiento(),
-                    cliente.getProvincia(),
-                    cliente.isPremium() ? "Sí" : "No",
-                    String.format("%.2f €", cliente.getTotalCompras())
-                };
+                Object[] fila = generarFilaTabla(clienteLeido);
                 
                 this.modalMostrarClientes.agregarFilaAtabla(fila);
             }
@@ -159,38 +152,46 @@ public class ControladorClientes {
         }
     }
     
-    public void mostrarMayorComprador() {
-        File file = new File(NOMBRE_FICHERO);
+    public Object[] generarFilaTabla(Cliente cliente) {
+        Object[] fila = {
+                    cliente.getNombreCompleto(),
+                    cliente.getAnioNacimiento(),
+                    cliente.getProvincia(),
+                    cliente.isPremium() ? "Sí" : "No",
+                    String.format("%.2f €", cliente.getTotalCompras())
+                };
         
-        if (!file.exists() || file.length() == 0) {
-            mostrarInformacion("El fichero no existe o está vacío. Registre clientes primero.");
+        return fila;
+    }
+    
+    public void mostrarMayorComprador() {
+        File fichero = cargarFichero();
+
+        if(fichero == null) {
             return;
         }
 
-        String maxNombre = "";
-        double maxCompras = -1.0; // Inicializador menor al mínimo posible (0.0)
+        Cliente clienteLeido = new Cliente();
+        String nombreClienteMayorCompras = "";
+        double cantidadComprarMasAlta = -1.0;
 
-        try (DataInputStream dis = new DataInputStream(new FileInputStream(NOMBRE_FICHERO))) {
+        try (DataInputStream dataInputStream = new DataInputStream(new FileInputStream(NOMBRE_FICHERO))) {
             while (true) {
-                String nombre = dis.readUTF();
-                int anio = dis.readInt();
-                String provincia = dis.readUTF();
-                boolean premium = dis.readBoolean();
-                double compras = dis.readDouble();
-
-                if (compras > maxCompras) {
-                    maxCompras = compras;
-                    maxNombre = nombre;
+                leerCliente(dataInputStream, clienteLeido);
+                
+                if (clienteLeido.getTotalCompras() > cantidadComprarMasAlta) {
+                    nombreClienteMayorCompras = clienteLeido.getNombreCompleto();
+                    cantidadComprarMasAlta = clienteLeido.getTotalCompras();
                 }
             }
         } catch (EOFException e) {
             // Fin del archivo alcanzado de forma correcta
-            if (maxCompras >= 0) {
-                String cliente = " Cliente: " + maxNombre + "\n";
-                cliente += " Importe total comprado: " + String.format("%.2f €", maxCompras) + "\n";
+            if (cantidadComprarMasAlta >= 0) {
+                String cliente = " Cliente: " + nombreClienteMayorCompras + "\n";
+                cliente += " Importe total comprado: " + String.format("%.2f €", cantidadComprarMasAlta) + "\n";
                 
                 mostrarInformacion(cliente);
-            } else {
+            } else {                        
                 mostrarInformacion("No se procesaron registros válidos.");
             }
         } catch (IOException e) {
@@ -212,5 +213,24 @@ public class ControladorClientes {
                 mensaje, 
                 "Información", 
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private File cargarFichero() {
+        File fichero = new File(NOMBRE_FICHERO);
+        
+        if (!fichero.exists() || fichero.length() == 0) {
+            mostrarInformacion("El fichero no existe o está vacío. Registre clientes primero.");
+            return null;
+        }
+        
+        return fichero;
+    }
+
+    private void leerCliente(DataInputStream dis, Cliente clienteLeido) throws IOException {
+        clienteLeido.setNombreCompleto(dis.readUTF());
+        clienteLeido.setAnioNacimiento(dis.readInt());
+        clienteLeido.setProvincia(dis.readUTF());
+        clienteLeido.setPremium(dis.readBoolean());
+        clienteLeido.setTotalCompras(dis.readDouble());
     }
 }

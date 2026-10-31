@@ -35,7 +35,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jButtonNuevoCliente = new javax.swing.JButton();
         jButtonMostrarClientes = new javax.swing.JButton();
         jButtonClienteMasCompras = new javax.swing.JButton();
-        jButtonSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -55,8 +54,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
 
         jButtonClienteMasCompras.setText("Cliente con más compras");
 
-        jButtonSalir.setText("Salir");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -64,7 +61,6 @@ public class InterfazPrincipal extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(113, 113, 113)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonSalir)
                     .addComponent(jButtonMostrarClientes)
                     .addComponent(jButtonNuevoCliente)
                     .addComponent(jButtonClienteMasCompras))
@@ -79,9 +75,7 @@ public class InterfazPrincipal extends javax.swing.JFrame {
                 .addComponent(jButtonMostrarClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jButtonClienteMasCompras, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jButtonSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(78, 78, 78))
+                .addGap(119, 119, 119))
         );
 
         pack();
@@ -100,6 +94,5 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonClienteMasCompras;
     private javax.swing.JButton jButtonMostrarClientes;
     private javax.swing.JButton jButtonNuevoCliente;
-    private javax.swing.JButton jButtonSalir;
     // End of variables declaration//GEN-END:variables
 }

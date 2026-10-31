@@ -26,7 +26,6 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jButtonSalir" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonMostrarClientes" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonNuevoCliente" min="-2" max="-2" attributes="0"/>
                   <Component id="jButtonClienteMasCompras" min="-2" max="-2" attributes="0"/>
@@ -44,9 +43,7 @@
               <Component id="jButtonMostrarClientes" max="32767" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jButtonClienteMasCompras" max="32767" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButtonSalir" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,11 +68,6 @@
     <Component class="javax.swing.JButton" name="jButtonClienteMasCompras">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cliente con m&#xe1;s compras"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="jButtonSalir">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Salir"/>
       </Properties>
     </Component>
   </SubComponents>
