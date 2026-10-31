@@ -125,7 +125,7 @@ public class ControladorClientes {
         this.modalMostrarClientes.setVisible(true);
     }
    
-    public void cargarClientes() {
+    private void cargarClientes() {
         File fichero = cargarFichero();
 
         if(fichero == null) {
@@ -152,7 +152,7 @@ public class ControladorClientes {
         }
     }
     
-    public Object[] generarFilaTabla(Cliente cliente) {
+    private Object[] generarFilaTabla(Cliente cliente) {
         Object[] fila = {
                     cliente.getNombreCompleto(),
                     cliente.getAnioNacimiento(),

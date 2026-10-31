@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clientes>
+    <cliente>
+        <nombreCompleto>Antonio Luis Villalba Garrido</nombreCompleto>
+        <anioNacimiento>1993</anioNacimiento>
+        <provincia>Córdoba</provincia>
+        <premium>true</premium>
+        <totalCompras>2000</totalCompras>
+    </cliente>
+    <cliente>
+        <nombreCompleto>Carlos Garcia Lopez</nombreCompleto>
+        <anioNacimiento>1985</anioNacimiento>
+        <provincia>Barcelona</provincia>
+        <premium>false</premium>
+        <totalCompras>120.40</totalCompras>
+    </cliente>
+    <cliente>
+        <nombreCompleto>Maria Jover Martinez</nombreCompleto>
+        <anioNacimiento>2001</anioNacimiento>
+        <provincia>Valencia</provincia>
+        <premium>true</premium>
+        <totalCompras>89.90</totalCompras>
+    </cliente>
+    <cliente>
+        <nombreCompleto>Ana Sevilla Ruiz</nombreCompleto>
+        <anioNacimiento>1997</anioNacimiento>
+        <provincia>Sevilla</provincia>
+        <premium>false</premium>
+        <totalCompras>540.20</totalCompras>
+    </cliente>
+    <cliente>
+        <nombreCompleto>Luis Gomez Perez</nombreCompleto>
+        <anioNacimiento>1979</anioNacimiento>
+        <provincia>Zaragoza</provincia>
+        <premium>true</premium>
+        <totalCompras>1250.00</totalCompras>
+    </cliente>
+</clientes>
