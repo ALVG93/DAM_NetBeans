@@ -17,16 +17,18 @@ import org.w3c.dom.NodeList;
 public class ControladorClientes {
     private static final String FICHERO_XML = "clientes.xml";
     
+    private ArrayList<Cliente> clientes;
+    
     public void ejecutarConversor() {
         VistaClientes.mostrarMensajeInfo("Iniciando el proceso de conversión de XML a JSON desde un archivo...");
         VistaClientes.mostrarMensajeInfo("Leyendo el archivo: " + FICHERO_XML);
 
         try {
-            ArrayList<Cliente> clientes = leerClientesDesdeXML(FICHERO_XML);
-            VistaClientes.mostrarMensajeInfo("Fichero XML leído correctamente. Clientes leidos: " + clientes.size());
+            leerClientesDesdeXML(FICHERO_XML);
+            VistaClientes.mostrarMensajeInfo("Fichero XML leído correctamente. Clientes leidos: " + this.clientes.size());
 
             VistaClientes.mostrarMensajeInfo("Convirtiendo a formato JSON...");
-            String jsonResultado = convertirListaAJson(clientes);
+            String jsonResultado = convertirListaAJson();
 
             VistaClientes.imprimirResultadoJson(jsonResultado);
             VistaClientes.mostrarMensajeInfo("Conversión realizada correctamente.");
@@ -38,8 +40,8 @@ public class ControladorClientes {
         }
     }
     
-    private ArrayList<Cliente> leerClientesDesdeXML(String rutaXml) throws Exception {
-        ArrayList<Cliente> listaClientes = new ArrayList<>();
+    private void leerClientesDesdeXML(String rutaXml) throws Exception {
+        this.clientes = new ArrayList<>();
         File archivoXml = new File(rutaXml);
 
         if (!archivoXml.exists()) {
@@ -63,11 +65,9 @@ public class ControladorClientes {
                 
                 leerDatosCliente((Element) node, clienteLeido);
                 
-                listaClientes.add(clienteLeido);
+                this.clientes.add(clienteLeido);
             }
         }
-        
-        return listaClientes;
     }
     
     private void leerDatosCliente(Element elemento, Cliente clienteLeido) {
@@ -87,7 +87,7 @@ public class ControladorClientes {
                 Double.parseDouble(elemento.getElementsByTagName("totalCompras").item(0).getTextContent()));
     }
 
-    private String convertirListaAJson(ArrayList<Cliente> listaClientes) {
+    private String convertirListaAJson() {
         // Usamos setPrettyPrinting para que el JSON se genere estructurado y sangrado en consola
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         
@@ -95,6 +95,6 @@ public class ControladorClientes {
         // Gson gson = new Gson();
         
         // Gson convierte de forma directa la colección de objetos a estructura JSON []
-        return gson.toJson(listaClientes);
+        return gson.toJson(this.clientes);
     }
 }
