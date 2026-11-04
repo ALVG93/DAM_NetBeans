@@ -3,16 +3,16 @@ package com.mycompany.tarea01_alvg_2026.modelo.enums.gamas;
 import java.util.ArrayList;
 
 public enum GamaPAE {
-    CAFETERAS(1, "Cafeteras"),
-    TOSTADORAS(2,  "Tostadoras"),
-    BATIDORAS(3,  "Batidoras"),
-    ROBOTS_DE_COCINA(4,  "Robots de cocina"),
-    FREIDORAS(5,  "Freidoras"),
-    MICROONDAS(6,  "Microondas"),
-    PLANCHAS(7,  "Planchas"),
-    ASPIRADORAS(8,  "Aspiradoras"),
-    SECADORES_DE_PELO(9,  "Secadores de pelo"),
-    AFEITADORAS(10,  "Afeitadoras");
+    MICROONDAS(1,  "Microondas"),
+    CAFETERA(2, "Cafetera"),
+    TOSTADORA(3,  "Tostadora"),
+    BATIDORA(4,  "Batidora"),
+    ROBOT_DE_COCINA(5,  "Robot de cocina"),
+    FREIDORA_DE_AIRE(6,  "Freidora de aire"),
+    PLANCHA(7,  "Plancha"),
+    ASPIRADORA(8,  "Aspiradora"),
+    SECADOR_DE_PELO(9,  "Secador de pelo"),
+    AFEITADORA(10,  "Afeitadora");
     
     private int idGama;
     private String nombreGama;

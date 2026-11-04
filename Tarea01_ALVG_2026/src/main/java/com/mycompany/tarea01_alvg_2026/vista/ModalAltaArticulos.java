@@ -2,12 +2,11 @@ package com.mycompany.tarea01_alvg_2026.vista;
 
 import com.mycompany.tarea01_alvg_2026.controlador.ControladorInventario;
 import com.mycompany.tarea01_alvg_2026.modelo.Articulo;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.EficienciaEnergetica;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Gama;
 import javax.swing.DefaultComboBoxModel;
 
 public class ModalAltaArticulos extends javax.swing.JDialog {
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ModalAltaArticulos.class.getName());
-
     private ControladorInventario controladorInventario;
     private Articulo nuevoArticulo;
     
@@ -22,14 +21,48 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         this.jButtonSalir.addActionListener(
                 e -> this.controladorInventario.cerrarModalAltaArticulo());
         
-        this.jComboBoxGama.setModel(new DefaultComboBoxModel<>(Gama.toArrayNombresGama()));
+        cargarComboBoxGama();
+        cargarComboBoxTipoArticulo();
+        cargarComboBoxEficienciaEnergetica();
+    }
+    
+    private void cargarComboBoxGama() {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(Gama.toArrayNombresGama());
+        modelo.insertElementAt("-- Seleccione gama --", 0);
+        
+        this.jComboBoxGama.setModel(modelo);
+        this.jComboBoxGama.setSelectedIndex(0);
+        
+        this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>());
+        this.jComboBoxTipo.setEnabled(false);
         
         this.jComboBoxGama.addActionListener(e -> refrescarTipoArticulo());
     }
     
     private void refrescarTipoArticulo() {
-        this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>(
-                Gama.obtenerArticulosGama((String) this.jComboBoxGama.getSelectedItem())));
+        String[] tiposArticulo = Gama.obtenerTiposArticuloGama(
+                (String) this.jComboBoxGama.getSelectedItem());
+        
+        if (tiposArticulo == null) {
+            this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>());
+            this.jComboBoxTipo.setEnabled(false);
+        } else {
+            this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>(tiposArticulo));
+            this.jComboBoxTipo.setEnabled(true);
+        }
+    }
+    
+    private void cargarComboBoxTipoArticulo() {
+        this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>());
+        this.jComboBoxTipo.setEnabled(false);
+    }
+    
+    private void cargarComboBoxEficienciaEnergetica() {
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(EficienciaEnergetica.toArrayNombresEficienciaEnergetica());
+        modelo.insertElementAt("-- Seleccione --", 0);
+        
+        this.jComboBoxClaseEnergetica.setModel(modelo);
+        this.jComboBoxClaseEnergetica.setSelectedIndex(0);
     }
 
     /**
@@ -147,7 +180,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Fecha de entrada:");
 
-        jSpinnerFechaEntrada.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFechaEntrada.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
         jSpinnerFechaEntrada.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaEntrada, "dd/MM/yyyy"));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -197,11 +230,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Clase energética:");
 
-        jComboBoxGama.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        jComboBoxClaseEnergetica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxTipo.setEnabled(false);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

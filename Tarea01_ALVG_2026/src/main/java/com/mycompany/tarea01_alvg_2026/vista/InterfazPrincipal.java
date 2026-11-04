@@ -7,8 +7,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 public class InterfazPrincipal extends javax.swing.JFrame {
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(InterfazPrincipal.class.getName());
-
     private ControladorInventario controladorInventario;
     
     public InterfazPrincipal(ControladorInventario controladorInventario) {

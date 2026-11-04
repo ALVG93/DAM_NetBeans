@@ -47,16 +47,22 @@ public enum Gama {
         return nombresGama.toArray(nombresGamaArray);
     }
     
-    public static String[] obtenerArticulosGama(String nombreGama) {
+    public static String[] obtenerTiposArticuloGama(String nombreGama) {
         Gama gama = nombreGamaToEnum(nombreGama);
+        
+        if(gama == null) {
+            return null;
+        }
         
         switch (gama) {
             case BLANCA:
                 return GamaBlanca.toArrayNombresGama();
             case MARRON:
                 return GamaMarron.toArrayNombresGama();
-            default:
+            case PAE:
                 return GamaPAE.toArrayNombresGama();
+            default:
+                return null;
         }
     }
 }

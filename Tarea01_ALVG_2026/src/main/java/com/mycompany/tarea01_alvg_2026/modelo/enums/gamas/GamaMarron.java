@@ -3,11 +3,12 @@ package com.mycompany.tarea01_alvg_2026.modelo.enums.gamas;
 import java.util.ArrayList;
 
 public enum GamaMarron {
-    TELEVSORES(1, "Televisores"),
-    BARRAS_DE_SONIDO(2,  "Barras de sonido"),
-    EQUIPOS_DE_MUSICA(3,  "Equipos de música"),
-    HOME_CINEMAS(4,  "Home cinemas"),
-    PROYECTORES(5,  "Proyectores");
+    TELEVSOR(1, "Televisor"),
+    BARRA_DE_SONIDO(2,  "Barra de sonido"),
+    EQUIPO_DE_MUSICA(3,  "Equipo de música"),
+    HOME_CINEMA(4,  "Home cinema"),
+    PROYECTOR(5,  "Proyector"),
+    REPRODUCTOR_MULTIMEDIA(6, "Reproductor multimedia");
     
     private int idGama;
     private String nombreGama;

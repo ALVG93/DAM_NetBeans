@@ -3,14 +3,16 @@ package com.mycompany.tarea01_alvg_2026.modelo.enums.gamas;
 import java.util.ArrayList;
 
 public enum GamaBlanca {
-    FRIGORIFICOS(1, "Frigorificos"),
-    LAVADORAS(2,  "Lavadoras"),
-    LAVAVAJILLAS(3,  "Lavavajillas"),
-    HORNOS(4,  "Hornos"),
-    PLACAS(5,  "Placas"),
-    CAMPANAS(6,  "Campanas"),
-    SECADORAS(7,  "Secadoras"),
-    AIRES_ACONDICIONADO(8,  "Aires acondicionado");
+    FRIGORIFICO(1, "Frigorífico"),
+    CONGELADOR(2, "Congelador"),
+    LAVADORA(3,  "Lavadora"),
+    SECADORA(4,  "Secadora"),
+    LAVAVAJILLAS(5,  "Lavavajillas"),
+    HORNO(6,  "Horno"),
+    PLACA_DE_COCCION(7,  "Placa de cocción"),
+    CAMPANA_EXTRACTORA(8,  "Campana extractora"),
+    AIRE_ACONDICIONADO(9,  "Aire acondicionado"),
+    TERMO_ELECTRICO(10, "Termo eléctrico");
     
     private int idGama;
     private String nombreGama;
