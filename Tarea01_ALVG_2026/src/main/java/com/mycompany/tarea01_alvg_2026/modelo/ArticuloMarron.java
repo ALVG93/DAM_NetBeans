@@ -3,23 +3,23 @@ package com.mycompany.tarea01_alvg_2026.modelo;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaMarron;
 
 public class ArticuloMarron extends Articulo {
-    private GamaMarron gama;
+    private GamaMarron tipo;
 
     public ArticuloMarron() {
     }
 
-    public GamaMarron getGama() {
-        return gama;
+    public GamaMarron getTipo() {
+        return this.tipo;
     }
 
-    public void setGama(GamaMarron gama) {
-        this.gama = gama;
+    public void setTipo(GamaMarron tipo) {
+        this.tipo = tipo;
     }
     
     @Override
     public String toString() {
         return "--- DATOS DEL ARTÍCULO CAPTURADO ---\n" + 
-                "ArticuloBlanco{" + "gama=" + gama + '}' +
+                "tipo: " + this.tipo.getNombreTipo() + '\n' +
                 super.toString();
     }
 }

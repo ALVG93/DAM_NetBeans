@@ -1,21 +1,28 @@
 package com.mycompany.tarea01_alvg_2026.modelo;
 
+import com.mycompany.tarea01_alvg_2026.modelo.enums.EficienciaEnergetica;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Estado;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Gama;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Garantia;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Servicio;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Articulo {
+    public static final double PRECIO_MAXIMO = 10000d;
+    
     private String codigo;
     private String denominacion;
-    private String tipo;
+    private Gama gama;
     private String marca;
     private double precio;
     private int stock;
-    private String claseEnergetica;
+    private EficienciaEnergetica claseEnergetica;
     private Date fechaEntrada;
-    private String garantia;
-    private String estado;
-    private ArrayList<String> servicios;
+    private Garantia garantia;
+    private Estado estado;
+    private ArrayList<Servicio> servicios;
     private String caracteristicas;
 
     public Articulo() {
@@ -23,7 +30,7 @@ public class Articulo {
     }
 
     public String getCodigo() {
-        return codigo;
+        return this.codigo;
     }
 
     public void setCodigo(String codigo) {
@@ -31,23 +38,23 @@ public class Articulo {
     }
 
     public String getDenominacion() {
-        return denominacion;
+        return this.denominacion;
     }
 
     public void setDenominacion(String denominacion) {
         this.denominacion = denominacion;
     }
 
-    public String getTipo() {
-        return tipo;
+    public Gama getGama() {
+        return this.gama;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setGama(Gama gama) {
+        this.gama = gama;
     }
 
     public String getMarca() {
-        return marca;
+        return this.marca;
     }
 
     public void setMarca(String marca) {
@@ -55,7 +62,7 @@ public class Articulo {
     }
 
     public double getPrecio() {
-        return precio;
+        return this.precio;
     }
 
     public void setPrecio(double precio) {
@@ -63,55 +70,55 @@ public class Articulo {
     }
 
     public int getStock() {
-        return stock;
+        return this.stock;
     }
 
     public void setStock(int stock) {
         this.stock = stock;
     }
 
-    public String getClaseEnergetica() {
-        return claseEnergetica;
+    public EficienciaEnergetica getClaseEnergetica() {
+        return this.claseEnergetica;
     }
 
-    public void setClaseEnergetica(String claseEnergetica) {
+    public void setClaseEnergetica(EficienciaEnergetica claseEnergetica) {
         this.claseEnergetica = claseEnergetica;
     }
 
     public Date getFechaEntrada() {
-        return fechaEntrada;
+        return this.fechaEntrada;
     }
 
     public void setFechaEntrada(Date fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
-    public String getGarantia() {
-        return garantia;
+    public Garantia getGarantia() {
+        return this.garantia;
     }
 
-    public void setGarantia(String garantia) {
+    public void setGarantia(Garantia garantia) {
         this.garantia = garantia;
     }
 
-    public String getEstado() {
-        return estado;
+    public Estado getEstado() {
+        return this.estado;
     }
 
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
 
-    public ArrayList<String> getServicios() {
-        return servicios;
+    public ArrayList<Servicio> getServicios() {
+        return this.servicios;
     }
 
-    public void setServicios(ArrayList<String> servicios) {
+    public void setServicios(ArrayList<Servicio> servicios) {
         this.servicios = servicios;
     }
 
     public String getCaracteristicas() {
-        return caracteristicas;
+        return this.caracteristicas;
     }
 
     public void setCaracteristicas(String caracteristicas) {
@@ -122,17 +129,25 @@ public class Articulo {
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
-        return "Código: " + codigo + "\n" +
-               "Denominación: " + denominacion + "\n" +
-               "Tipo de artículo: " + tipo + "\n" +
-               "Marca: " + marca + "\n" +
-               "Precio unitario: " + String.format("%.2f", precio) + " €\n" +
-               "Stock disponible: " + stock + "\n" +
-               "Clase energética: " + claseEnergetica + "\n" +
-               "Fecha de entrada: " + sdf.format(fechaEntrada) + "\n" +
-               "Garantía: " + garantia + "\n" +
-               "Estado: " + estado + "\n" +
-               "Servicios: " + String.join(", ", servicios) + "\n" +
-               "Características: " + caracteristicas + "\n";
+        String servicios = "";
+        
+        for(Servicio servicio : this.servicios) {
+            servicios += servicio.getNombreServicio() + ", ";
+        }
+        
+        servicios = servicios.substring(0, servicios.length() - 2);
+        
+        return "Código: " + this.codigo + "\n" +
+               "Denominación: " + this.denominacion + "\n" +
+               "Gama: " + this.gama.getNombreGama() + "\n" +
+               "Marca: " + this.marca + "\n" +
+               "Precio unitario: " + String.format("%.2f", this.precio) + " €\n" +
+               "Stock disponible: " + this.stock + "\n" +
+               "Clase energética: " + this.claseEnergetica.getNombreEficienciaEnergetica() + "\n" +
+               "Fecha de entrada: " + sdf.format(this.fechaEntrada) + "\n" +
+               "Garantía: " + this.garantia.getNombreGarantia() + "\n" +
+               "Estado: " + this.estado.getNombreEstado() + "\n" +
+               "Servicios: " + servicios + "\n" +
+               "Características: " + this.caracteristicas + "\n";
     }
 }

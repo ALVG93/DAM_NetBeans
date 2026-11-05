@@ -14,40 +14,40 @@ public enum GamaPAE {
     SECADOR_DE_PELO(9,  "Secador de pelo"),
     AFEITADORA(10,  "Afeitadora");
     
-    private int idGama;
-    private String nombreGama;
+    private int idTipo;
+    private String nombreTipo;
 
-    private GamaPAE(int idGama, String nombreGama) {
-        this.idGama = idGama;
-        this.nombreGama = nombreGama;
+    private GamaPAE(int idTipo, String nombreTipo) {
+        this.idTipo = idTipo;
+        this.nombreTipo = nombreTipo;
     }
 
-    public int getIdGama() {
-        return idGama;
+    public int getIdTipo() {
+        return idTipo;
     }
 
-    public String getNombreGama() {
-        return nombreGama;
+    public String getNombreTipo() {
+        return nombreTipo;
     }
     
-    public static GamaPAE nombreGamaToEnum(String nombreGama){
-        for (GamaPAE gama : GamaPAE.values()) {
-            if (gama.getNombreGama().contains(nombreGama)) {
-                return gama;
+    public static GamaPAE nombreTipoToEnum(String nombreTipo){
+        for (GamaPAE tipo : GamaPAE.values()) {
+            if (tipo.getNombreTipo().contains(nombreTipo)) {
+                return tipo;
             }
         }
         
         return null;
     }
     
-    public static String[] toArrayNombresGama(){
-        ArrayList<String> nombresGama = new ArrayList<String>();
-        String[] nombresGamaArray = {};
+    public static String[] toArrayNombresTipo(){
+        ArrayList<String> nombresTipo = new ArrayList<String>();
+        String[] nombresTipoArray = {};
         
-        for (GamaPAE gama : GamaPAE.values()) {
-            nombresGama.add(gama.getNombreGama());
+        for (GamaPAE tipo : GamaPAE.values()) {
+            nombresTipo.add(tipo.getNombreTipo());
         }
         
-        return nombresGama.toArray(nombresGamaArray);
+        return nombresTipo.toArray(nombresTipoArray);
     }
 }

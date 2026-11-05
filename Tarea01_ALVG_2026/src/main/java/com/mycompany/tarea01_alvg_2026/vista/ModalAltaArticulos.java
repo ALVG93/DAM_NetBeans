@@ -21,9 +21,23 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         this.jButtonSalir.addActionListener(
                 e -> this.controladorInventario.cerrarModalAltaArticulo());
         
+        this.jButtonGuardar.addActionListener(
+                e -> guardarArticulo());
+        
         cargarComboBoxGama();
         cargarComboBoxTipoArticulo();
         cargarComboBoxEficienciaEnergetica();
+    }
+    
+    private boolean datosValidos() {
+        
+        return true;
+    }
+    
+    private void guardarArticulo() {
+        if(datosValidos()) {
+            
+        }
     }
     
     private void cargarComboBoxGama() {
@@ -40,7 +54,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     }
     
     private void refrescarTipoArticulo() {
-        String[] tiposArticulo = Gama.obtenerTiposArticuloGama(
+        String[] tiposArticulo = Gama.obtenerNombresTiposArticuloGama(
                 (String) this.jComboBoxGama.getSelectedItem());
         
         if (tiposArticulo == null) {

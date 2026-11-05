@@ -10,40 +10,40 @@ public enum GamaMarron {
     PROYECTOR(5,  "Proyector"),
     REPRODUCTOR_MULTIMEDIA(6, "Reproductor multimedia");
     
-    private int idGama;
-    private String nombreGama;
+    private int idTipo;
+    private String nombreTipo;
 
-    private GamaMarron(int idGama, String nombreGama) {
-        this.idGama = idGama;
-        this.nombreGama = nombreGama;
+    private GamaMarron(int idTipo, String nombreTipo) {
+        this.idTipo = idTipo;
+        this.nombreTipo = nombreTipo;
     }
 
-    public int getIdGama() {
-        return idGama;
+    public int getIdTipo() {
+        return idTipo;
     }
 
-    public String getNombreGama() {
-        return nombreGama;
+    public String getNombreTipo() {
+        return nombreTipo;
     }
     
-    public static GamaMarron nombreGamaToEnum(String nombreGama){
-        for (GamaMarron gama : GamaMarron.values()) {
-            if (gama.getNombreGama().contains(nombreGama)) {
-                return gama;
+    public static GamaMarron nombreTipoToEnum(String nombreTipo){
+        for (GamaMarron tipo : GamaMarron.values()) {
+            if (tipo.getNombreTipo().contains(nombreTipo)) {
+                return tipo;
             }
         }
         
         return null;
     }
     
-    public static String[] toArrayNombresGama(){
-        ArrayList<String> nombresGama = new ArrayList<String>();
-        String[] nombresGamaArray = {};
+    public static String[] toArrayNombresTipo(){
+        ArrayList<String> nombresTipo = new ArrayList<String>();
+        String[] nombresTipoArray = {};
         
-        for (GamaMarron gama : GamaMarron.values()) {
-            nombresGama.add(gama.getNombreGama());
+        for (GamaMarron tipo : GamaMarron.values()) {
+            nombresTipo.add(tipo.getNombreTipo());
         }
         
-        return nombresGama.toArray(nombresGamaArray);
+        return nombresTipo.toArray(nombresTipoArray);
     }
 }
