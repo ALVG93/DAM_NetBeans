@@ -4,6 +4,7 @@ import com.mycompany.tarea01_alvg_2026.controlador.ControladorInventario;
 import com.mycompany.tarea01_alvg_2026.modelo.Articulo;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.EficienciaEnergetica;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Gama;
+import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 
 public class ModalAltaArticulos extends javax.swing.JDialog {
@@ -30,6 +31,25 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     }
     
     private boolean datosValidos() {
+        if(!this.controladorInventario.codigoValido(this.jTextFieldCodigo.getText().trim())) {
+            return false;
+        } else if(!this.controladorInventario.denominacionValida(this.jTextFieldDenominacion.getText().trim())) {
+            return false;
+        } else if(!this.controladorInventario.gamaValida((String)this.jComboBoxGama.getSelectedItem())) {
+            return false;
+        } else if(!this.controladorInventario.tipoValido((String)this.jComboBoxTipo.getSelectedItem())) {
+            return false;
+        } else if(!this.controladorInventario.marcaValida(this.jTextFieldMarca.getText().trim())) {
+            return false;
+        } else if(!this.controladorInventario.precioValido(this.jTextFieldPrecio.getText().trim())) {
+            return false;
+        } else if(!this.controladorInventario.stockValido(this.jTextFieldStock.getText().trim())) {
+            return false;
+        } else if(!this.controladorInventario.claseEnergeticaValida((String)this.jComboBoxClaseEnergetica.getSelectedItem())) {
+            return false;
+        } else if(!this.controladorInventario.fechaEntradaValida((Date)this.jSpinnerFechaEntrada.getValue())) {
+            return false;
+        }
         
         return true;
     }
