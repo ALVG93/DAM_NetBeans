@@ -3,7 +3,11 @@ package com.mycompany.tarea01_alvg_2026.vista;
 import com.mycompany.tarea01_alvg_2026.controlador.ControladorInventario;
 import com.mycompany.tarea01_alvg_2026.modelo.Articulo;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.EficienciaEnergetica;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Estado;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Gama;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Garantia;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Servicio;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 
@@ -32,22 +36,43 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     
     private boolean datosValidos() {
         if(!this.controladorInventario.codigoValido(this.jTextFieldCodigo.getText().trim())) {
+            this.jTextFieldCodigo.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.denominacionValida(this.jTextFieldDenominacion.getText().trim())) {
+            this.jTextFieldDenominacion.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.gamaValida((String)this.jComboBoxGama.getSelectedItem())) {
+            this.jComboBoxGama.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.tipoValido((String)this.jComboBoxTipo.getSelectedItem())) {
+            this.jComboBoxTipo.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.marcaValida(this.jTextFieldMarca.getText().trim())) {
+            this.jTextFieldMarca.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.precioValido(this.jTextFieldPrecio.getText().trim())) {
+            this.jTextFieldPrecio.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.stockValido(this.jTextFieldStock.getText().trim())) {
+            this.jTextFieldStock.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.claseEnergeticaValida((String)this.jComboBoxClaseEnergetica.getSelectedItem())) {
+            this.jComboBoxClaseEnergetica.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.fechaEntradaValida((Date)this.jSpinnerFechaEntrada.getValue())) {
+            this.jSpinnerFechaEntrada.requestFocusInWindow();
+            return false;
+        } else if(!this.controladorInventario.garantiaValida(getGarantiaSeleccionada())) {
+            this.jRadioButtonGarantia3anios.requestFocusInWindow();
+            return false;
+        } else if(!this.controladorInventario.estadoValida(getEstadoSeleccionado())) {
+            this.jRadioButtonEstadoNuevo.requestFocusInWindow();
+            return false;
+        } else if(!this.controladorInventario.serviciosValidos(getServiciosSeleccionados())) {
+            this.jCheckBoxServicioRecogidaTienda.requestFocusInWindow();
+            return false;
+        } else if(!this.controladorInventario.descripcionValida(this.jTextAreaCaracteristicas.getText().trim())) {
+            this.jTextAreaCaracteristicas.requestFocusInWindow();
             return false;
         }
         
@@ -97,6 +122,60 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         
         this.jComboBoxClaseEnergetica.setModel(modelo);
         this.jComboBoxClaseEnergetica.setSelectedIndex(0);
+    }
+    
+    public Garantia getGarantiaSeleccionada() {
+        if (this.jRadioButtonGarantia1anios.isSelected()) {
+            return Garantia.UN_ANIO;
+        }
+        
+        if (this.jRadioButtonGarantia3anios.isSelected()) {
+            return Garantia.TRES_ANIOS;
+        }
+        
+        if (this.jRadioButtonGarantia5anios.isSelected()) {
+            return Garantia.CINCO_ANIOS;
+        }
+        
+        return null;
+    }
+    
+    public Estado getEstadoSeleccionado() {
+        if (this.jRadioButtonEstadoNuevo.isSelected()) {
+            return Estado.NUEVO;
+        }
+        
+        if (this.jRadioButtonEstadoReacondicionado.isSelected()) {
+            return Estado.REACONDICIONADO;
+        }
+        
+        if (this.jRadioButtonEstadoOferta.isSelected()) {
+            return Estado.OFERTA;
+        }
+        
+        return null;
+    }
+    
+    public ArrayList<Servicio> getServiciosSeleccionados() {
+        ArrayList<Servicio> servicios = new ArrayList<Servicio>();
+        
+        if (this.jCheckBoxServicioRecogidaTienda.isSelected()) {
+            servicios.add(Servicio.RECOGIDA_EN_TIENDA);
+        }
+        
+        if (this.jCheckBoxServicioEntregaDomicilio.isSelected()) {
+            servicios.add(Servicio.ENTREGA_A_DOMICILIO);
+        }
+        
+        if (this.jCheckBoxServicioInstalacion.isSelected()) {
+            servicios.add(Servicio.INSTALACION_PUESTA_EN_MARCHA);
+        }
+        
+        if (this.jCheckBoxServicioRetiradaUsado.isSelected()) {
+            servicios.add(Servicio.RETIRADA_APARATO_USADO);
+        }
+        
+        return servicios;
     }
 
     /**

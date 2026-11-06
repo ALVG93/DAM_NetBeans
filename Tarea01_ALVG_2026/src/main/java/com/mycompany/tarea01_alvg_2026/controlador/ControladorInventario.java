@@ -2,13 +2,17 @@ package com.mycompany.tarea01_alvg_2026.controlador;
 
 import com.mycompany.tarea01_alvg_2026.modelo.Articulo;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.EficienciaEnergetica;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Estado;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Gama;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Garantia;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.Servicio;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaBlanca;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaMarron;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaPAE;
 import com.mycompany.tarea01_alvg_2026.vista.InterfazPrincipal;
 import com.mycompany.tarea01_alvg_2026.vista.ModalAltaArticulos;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
@@ -172,7 +176,43 @@ public class ControladorInventario {
         return true;
     }
     
-    public void guardarArticulo() {
+    public boolean garantiaValida(Garantia garantia) {
+        if(garantia == null) {
+            mostrarError("Se debe seleccionar la garantía del artículo.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean estadoValida(Estado estado) {
+        if(estado == null) {
+            mostrarError("Se debe seleccionar un estado del artículo.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean serviciosValidos(ArrayList<Servicio> servicios) {
+        if(servicios.isEmpty()) {
+            mostrarError("Se debe seleccionar al menos un servicio que asociar al artículo.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public boolean descripcionValida(String descripcion) {
+        if(descripcion.isEmpty()) {
+            mostrarError("Se cumplimentar una descripción del artículo.");
+            return false;
+        }
+        
+        return true;
+    }
+    
+    public void mostrarArticuloLeido() {
         
     }
     

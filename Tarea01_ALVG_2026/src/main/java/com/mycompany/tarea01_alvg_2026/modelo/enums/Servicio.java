@@ -3,9 +3,10 @@ package com.mycompany.tarea01_alvg_2026.modelo.enums;
 import java.util.ArrayList;
 
 public enum Servicio {
-    NUEVO(1, "Nuevo"),
-    REACONDICIONADO(2,  "Reacondicionado"),
-    OFERTA(3,  "Oferta");
+    RECOGIDA_EN_TIENDA(1, "Recogida en tienda"),
+    ENTREGA_A_DOMICILIO(2,  "Entrega a domicilio"),
+    INSTALACION_PUESTA_EN_MARCHA(3,  "Instalación y puesta en marcha"),
+    RETIRADA_APARATO_USADO(3,  "Retirada del aparato usado (RAEE)");
     
     private int idServicio;
     private String nombreServicio;
