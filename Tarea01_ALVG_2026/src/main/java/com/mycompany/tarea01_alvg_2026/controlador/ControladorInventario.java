@@ -11,10 +11,13 @@ import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaMarron;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaPAE;
 import com.mycompany.tarea01_alvg_2026.vista.InterfazPrincipal;
 import com.mycompany.tarea01_alvg_2026.vista.ModalAltaArticulos;
+import java.awt.Dimension;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class ControladorInventario {
     private InterfazPrincipal interfazPrincipal;
@@ -27,7 +30,7 @@ public class ControladorInventario {
     
     public void modalAltaArticulo() {
         this.modalAltaArticulos = new ModalAltaArticulos(
-                this.interfazPrincipal, this, new Articulo());
+                this.interfazPrincipal, this);
         
         this.modalAltaArticulos.setVisible(true);
     }
@@ -212,8 +215,47 @@ public class ControladorInventario {
         return true;
     }
     
-    public void mostrarArticuloLeido() {
+    public void mostrarArticuloLeido(Articulo articulo) {
+        JTextArea jTextAreaArticulo = new JTextArea(articulo.toString());
+        jTextAreaArticulo.setEditable(false);
+
+        JScrollPane jScrollPaneArticulo = new JScrollPane(jTextAreaArticulo);
+        jScrollPaneArticulo.setPreferredSize(new Dimension(500, 300));
+
+        Object[] cuerpoMensaje = {
+            "Datos capturados por el formulario. Al ser una maqueta, no se almacenan.\n\n",
+            jScrollPaneArticulo
+        };
         
+        mostrarInformacion("Registro guardado.");
+        
+        JOptionPane.showMessageDialog(
+                this.interfazPrincipal, 
+                cuerpoMensaje, 
+                "Datos recogidos", 
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    public boolean fechaEntradaModificada(Date fechaEntrada) {
+        LocalDate fechaElegida = fechaEntrada.toInstant()
+                .atZone(java.time.ZoneId.systemDefault())
+                .toLocalDate();
+
+        LocalDate hoy = LocalDate.now();
+
+        if (fechaElegida.isEqual(hoy)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private void mostrarInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(
+                this.interfazPrincipal, 
+                mensaje, 
+                "Información", 
+                JOptionPane.INFORMATION_MESSAGE);
     }
     
     private void mostrarError(String mensajeError) {
@@ -230,9 +272,13 @@ public class ControladorInventario {
         }
     }
     
-    public void cerrarModalAltaArticulo() {
-        if (preguntarSiSalir() == JOptionPane.YES_OPTION) {
+    public void cerrarModalAltaArticulo(boolean algunDatoIntroducido) {
+        if(!algunDatoIntroducido) {
             this.modalAltaArticulos.dispose();
+        } else {
+            if (preguntarSiSalir() == JOptionPane.YES_OPTION) {
+                this.modalAltaArticulos.dispose();
+            }
         }
     }
     

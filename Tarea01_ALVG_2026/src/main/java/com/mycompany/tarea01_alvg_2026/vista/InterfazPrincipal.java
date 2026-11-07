@@ -93,14 +93,18 @@ public class InterfazPrincipal extends javax.swing.JFrame {
         jLabel4.setText("Sistema de gestión de inventario (maqueta de interfaz)");
 
         jButtonAnadirArticulo.setText("Añadir Artículo");
+        jButtonAnadirArticulo.setToolTipText("Para añadir un artículo nuevo.");
         jButtonAnadirArticulo.addActionListener(this::jButtonAnadirArticuloActionPerformed);
 
         jMenuGestionInventario.setText("Gestión de Inventario");
+        jMenuGestionInventario.setToolTipText("Opciones de gestión del inventario.");
 
         jMenuItemAnadirArticulo.setText("Añadir Artículo");
+        jMenuItemAnadirArticulo.setToolTipText("Para añadir un artículo nuevo.");
         jMenuGestionInventario.add(jMenuItemAnadirArticulo);
 
         jMenuItemSalir.setText("Salir");
+        jMenuItemSalir.setToolTipText("Salir del programa.");
         jMenuGestionInventario.add(jMenuItemSalir);
 
         jMenuBar.add(jMenuGestionInventario);

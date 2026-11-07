@@ -8,6 +8,10 @@ public class ArticuloMarron extends Articulo {
     public ArticuloMarron() {
     }
 
+    public ArticuloMarron(GamaMarron tipo) {
+        this.tipo = tipo;
+    }
+
     public GamaMarron getTipo() {
         return this.tipo;
     }
@@ -18,8 +22,6 @@ public class ArticuloMarron extends Articulo {
     
     @Override
     public String toString() {
-        return "--- DATOS DEL ARTÍCULO CAPTURADO ---\n" + 
-                "tipo: " + this.tipo.getNombreTipo() + '\n' +
-                super.toString();
+        return super.toString(this.tipo.getNombreTipo());
     }
 }

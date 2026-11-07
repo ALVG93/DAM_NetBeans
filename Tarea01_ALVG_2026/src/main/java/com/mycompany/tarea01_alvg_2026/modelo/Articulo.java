@@ -125,8 +125,7 @@ public class Articulo {
         this.caracteristicas = caracteristicas;
     }
 
-    @Override
-    public String toString() {
+    public String toString(String tipo) {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         
         String servicios = "";
@@ -137,9 +136,11 @@ public class Articulo {
         
         servicios = servicios.substring(0, servicios.length() - 2);
         
-        return "Código: " + this.codigo + "\n" +
+        return "--- DATOS DEL ARTÍCULO CAPTURADO ---\n" + 
+               "Código: " + this.codigo + "\n" +
                "Denominación: " + this.denominacion + "\n" +
                "Gama: " + this.gama.getNombreGama() + "\n" +
+               "tipo: " + tipo + '\n' +
                "Marca: " + this.marca + "\n" +
                "Precio unitario: " + String.format("%.2f", this.precio) + " €\n" +
                "Stock disponible: " + this.stock + "\n" +

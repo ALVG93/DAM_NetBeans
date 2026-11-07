@@ -8,6 +8,10 @@ public class ArticuloBlanco extends Articulo {
     public ArticuloBlanco() {
     }
 
+    public ArticuloBlanco(GamaBlanca tipo) {
+        this.tipo = tipo;
+    }
+
     public GamaBlanca getTipo() {
         return this.tipo;
     }
@@ -18,8 +22,6 @@ public class ArticuloBlanco extends Articulo {
 
     @Override
     public String toString() {
-        return "--- DATOS DEL ARTÍCULO CAPTURADO ---\n" + 
-                "tipo: " + this.tipo.getNombreTipo() + '\n' +
-                super.toString();
+        return super.toString(this.tipo.getNombreTipo());
     }
 }

@@ -8,12 +8,15 @@
     </Component>
   </NonVisualComponents>
   <Properties>
-    <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="defaultCloseOperation" type="int" value="0"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosing"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -43,7 +46,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="jPanel4" max="32767" attributes="0"/>
                           <Component id="jPanel5" alignment="0" max="32767" attributes="0"/>
-                          <Component id="jPanel3" alignment="0" pref="407" max="32767" attributes="0"/>
+                          <Component id="jPanel3" alignment="0" pref="408" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jSeparator1" max="32767" attributes="0"/>
@@ -180,10 +183,19 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldCodigo">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="El c&#xf3;digo del art&#xed;culo."/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldDenominacion">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="La denominaci&#xf3;n del art&#xed;culo."/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldMarca">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="La marca del art&#xed;culo."/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -267,14 +279,21 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldPrecio">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="El precio unitario en euros del art&#xed;culo."/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldStock">
+          <Properties>
+            <Property name="toolTipText" type="java.lang.String" value="El stock disponible del art&#xed;culo."/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFechaEntrada">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="now" maximum="now" stepSize="5" type="date"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="La fecha de entrada del art&#xed;culo."/>
             <Property name="editor" type="javax.swing.JComponent" editor="org.netbeans.modules.form.editors.SpinnerEditorEditor">
               <SpinnerEditor format="dd/MM/yyyy" type="1"/>
             </Property>
@@ -372,6 +391,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="La gama del art&#xed;culo."/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -382,6 +402,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="El tipo del art&#xed;culo."/>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <AuxValues>
@@ -393,6 +414,7 @@
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="0"/>
             </Property>
+            <Property name="toolTipText" type="java.lang.String" value="La clase de eficiencia energ&#xe9;tica del art&#xed;culo."/>
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -446,6 +468,7 @@
               <ComponentRef name="buttonGroupGarantia"/>
             </Property>
             <Property name="text" type="java.lang.String" value="3 a&#xf1;os (garantia legal)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si el art&#xed;culo cuenta con una garant&#xed;a de 3 a&#xf1;os."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonGarantia5anios">
@@ -454,6 +477,7 @@
               <ComponentRef name="buttonGroupGarantia"/>
             </Property>
             <Property name="text" type="java.lang.String" value="5 a&#xf1;os (garant&#xed;a ampliada)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si el art&#xed;culo cuenta con una garant&#xed;a de 5 a&#xf1;os."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonGarantia1anios">
@@ -462,6 +486,7 @@
               <ComponentRef name="buttonGroupGarantia"/>
             </Property>
             <Property name="text" type="java.lang.String" value="1 a&#xf1;o (art&#xed;culo de segunda mano)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si el art&#xed;culo cuenta con una garant&#xed;a de 1 a&#xf1;os."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -516,21 +541,25 @@
         <Component class="javax.swing.JCheckBox" name="jCheckBoxServicioRecogidaTienda">
           <Properties>
             <Property name="text" type="java.lang.String" value="Recogida en tienda"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si se desea recoger en tienda el art&#xed;culo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxServicioInstalacion">
           <Properties>
             <Property name="text" type="java.lang.String" value="Instalaci&#xf3;n y puesta en marcha"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si se desea instalar y poner en marcha el art&#xed;culo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxServicioRetiradaUsado">
           <Properties>
             <Property name="text" type="java.lang.String" value="Retirada del aparato usado (RAEE)"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si se desea retirar el aparato usado al que va a sustituir el art&#xed;culo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxServicioEntregaDomicilio">
           <Properties>
             <Property name="text" type="java.lang.String" value="Entrega a domicilio"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si se desea entregar a domicilio el art&#xed;culo."/>
           </Properties>
         </Component>
       </SubComponents>
@@ -581,6 +610,7 @@
               <ComponentRef name="buttonGroupEstadoArticulo"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Nuevo"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si el art&#xed;culo es nuevo."/>
           </Properties>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioButtonEstadoReacondicionado">
@@ -589,6 +619,7 @@
               <ComponentRef name="buttonGroupEstadoArticulo"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Reacondicionado"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si el art&#xed;culo es reacondicionado."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonEstadoReacondicionadoActionPerformed"/>
@@ -600,6 +631,7 @@
               <ComponentRef name="buttonGroupEstadoArticulo"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Oferta"/>
+            <Property name="toolTipText" type="java.lang.String" value="Si el art&#xed;culo est&#xe1; de oferta."/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jRadioButtonEstadoOfertaActionPerformed"/>
@@ -649,6 +681,7 @@
               <Properties>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="toolTipText" type="java.lang.String" value="La descripci&#xf3;n del art&#xed;culo."/>
               </Properties>
             </Component>
           </SubComponents>
@@ -660,11 +693,13 @@
     <Component class="javax.swing.JButton" name="jButtonSalir">
       <Properties>
         <Property name="text" type="java.lang.String" value="Salir"/>
+        <Property name="toolTipText" type="java.lang.String" value="Salir de esta pantalla."/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="jButtonGuardar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Dar de alta este art&#xed;culo."/>
       </Properties>
     </Component>
   </SubComponents>

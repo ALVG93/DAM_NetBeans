@@ -7,16 +7,19 @@
         <Menu class="javax.swing.JMenu" name="jMenuGestionInventario">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gesti&#xf3;n de Inventario"/>
+            <Property name="toolTipText" type="java.lang.String" value="Opciones de gesti&#xf3;n del inventario."/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemAnadirArticulo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir Art&#xed;culo"/>
+                <Property name="toolTipText" type="java.lang.String" value="Para a&#xf1;adir un art&#xed;culo nuevo."/>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemSalir">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Salir"/>
+                <Property name="toolTipText" type="java.lang.String" value="Salir del programa."/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -153,6 +156,7 @@
     <Component class="javax.swing.JButton" name="jButtonAnadirArticulo">
       <Properties>
         <Property name="text" type="java.lang.String" value="A&#xf1;adir Art&#xed;culo"/>
+        <Property name="toolTipText" type="java.lang.String" value="Para a&#xf1;adir un art&#xed;culo nuevo."/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAnadirArticuloActionPerformed"/>

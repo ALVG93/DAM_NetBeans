@@ -2,11 +2,17 @@ package com.mycompany.tarea01_alvg_2026.vista;
 
 import com.mycompany.tarea01_alvg_2026.controlador.ControladorInventario;
 import com.mycompany.tarea01_alvg_2026.modelo.Articulo;
+import com.mycompany.tarea01_alvg_2026.modelo.ArticuloBlanco;
+import com.mycompany.tarea01_alvg_2026.modelo.ArticuloMarron;
+import com.mycompany.tarea01_alvg_2026.modelo.ArticuloPAE;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.EficienciaEnergetica;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Estado;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Gama;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Garantia;
 import com.mycompany.tarea01_alvg_2026.modelo.enums.Servicio;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaBlanca;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaMarron;
+import com.mycompany.tarea01_alvg_2026.modelo.enums.gamas.GamaPAE;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
@@ -15,16 +21,15 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     private ControladorInventario controladorInventario;
     private Articulo nuevoArticulo;
     
-    public ModalAltaArticulos(java.awt.Frame parent, ControladorInventario controladorInventario, Articulo nuevoArticulo) {
+    public ModalAltaArticulos(java.awt.Frame parent, ControladorInventario controladorInventario) {
         super(parent, ModalityType.APPLICATION_MODAL);
         
         this.controladorInventario = controladorInventario;
-        this.nuevoArticulo = nuevoArticulo;
         
         initComponents();
         
         this.jButtonSalir.addActionListener(
-                e -> this.controladorInventario.cerrarModalAltaArticulo());
+                e -> salir());
         
         this.jButtonGuardar.addActionListener(
                 e -> guardarArticulo());
@@ -81,8 +86,65 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     
     private void guardarArticulo() {
         if(datosValidos()) {
+            Gama gama = Gama.nombreGamaToEnum((String)this.jComboBoxGama.getSelectedItem());
             
+            switch(gama){
+                case BLANCA:
+                    this.nuevoArticulo = new ArticuloBlanco(GamaBlanca.nombreTipoToEnum((String)this.jComboBoxTipo.getSelectedItem()));
+                    break;
+                case MARRON:
+                    this.nuevoArticulo = new ArticuloMarron(GamaMarron.nombreTipoToEnum((String)this.jComboBoxTipo.getSelectedItem()));
+                    break;
+                case PAE:
+                    this.nuevoArticulo = new ArticuloPAE(GamaPAE.nombreTipoToEnum((String)this.jComboBoxTipo.getSelectedItem()));
+                    break;
+            }
+            
+            guardarDatosComunes();
+            
+            this.controladorInventario.mostrarArticuloLeido(nuevoArticulo);
+            
+            limpiarFormulario();
         }
+    }
+    
+    private void guardarDatosComunes() {
+        this.nuevoArticulo.setCodigo(this.jTextFieldCodigo.getText().trim());
+        this.nuevoArticulo.setDenominacion(this.jTextFieldDenominacion.getText().trim());
+        this.nuevoArticulo.setGama(Gama.nombreGamaToEnum((String)this.jComboBoxGama.getSelectedItem()));
+        this.nuevoArticulo.setMarca(this.jTextFieldMarca.getText().trim());
+        this.nuevoArticulo.setPrecio(Double.parseDouble(this.jTextFieldPrecio.getText().trim()));
+        this.nuevoArticulo.setStock(Integer.parseInt(this.jTextFieldStock.getText().trim()));
+        this.nuevoArticulo.setClaseEnergetica(EficienciaEnergetica.nombreEficienciaEnergeticaToEnum((String)this.jComboBoxClaseEnergetica.getSelectedItem()));
+        this.nuevoArticulo.setFechaEntrada((Date)this.jSpinnerFechaEntrada.getValue());
+        this.nuevoArticulo.setGarantia(getGarantiaSeleccionada());
+        this.nuevoArticulo.setEstado(getEstadoSeleccionado());
+        this.nuevoArticulo.setServicios(getServiciosSeleccionados());
+        this.nuevoArticulo.setCaracteristicas(this.jTextAreaCaracteristicas.getText().trim());
+    }
+    
+    private void limpiarFormulario() {
+        this.jTextFieldCodigo.setText("");
+        this.jTextFieldDenominacion.setText("");
+        this.jComboBoxGama.setSelectedIndex(0);
+        this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>());
+        this.jComboBoxTipo.setEnabled(false);
+        this.jTextFieldMarca.setText("");
+        this.jTextFieldPrecio.setText("");
+        this.jTextFieldStock.setText("");
+        this.jComboBoxClaseEnergetica.setSelectedIndex(0);
+        this.jSpinnerFechaEntrada.setValue(new Date());
+        this.buttonGroupGarantia.clearSelection();
+        this.buttonGroupEstadoArticulo.clearSelection();
+        desmarcarServicios();
+        this.jTextAreaCaracteristicas.setText("");
+    }
+    
+    private void desmarcarServicios() {
+        this.jCheckBoxServicioRecogidaTienda.setSelected(false);
+        this.jCheckBoxServicioEntregaDomicilio.setSelected(false);
+        this.jCheckBoxServicioInstalacion.setSelected(false);
+        this.jCheckBoxServicioRetiradaUsado.setSelected(false);
     }
     
     private void cargarComboBoxGama() {
@@ -91,9 +153,6 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         
         this.jComboBoxGama.setModel(modelo);
         this.jComboBoxGama.setSelectedIndex(0);
-        
-        this.jComboBoxTipo.setModel(new DefaultComboBoxModel<>());
-        this.jComboBoxTipo.setEnabled(false);
         
         this.jComboBoxGama.addActionListener(e -> refrescarTipoArticulo());
     }
@@ -124,7 +183,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         this.jComboBoxClaseEnergetica.setSelectedIndex(0);
     }
     
-    public Garantia getGarantiaSeleccionada() {
+    private Garantia getGarantiaSeleccionada() {
         if (this.jRadioButtonGarantia1anios.isSelected()) {
             return Garantia.UN_ANIO;
         }
@@ -140,7 +199,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         return null;
     }
     
-    public Estado getEstadoSeleccionado() {
+    private Estado getEstadoSeleccionado() {
         if (this.jRadioButtonEstadoNuevo.isSelected()) {
             return Estado.NUEVO;
         }
@@ -156,7 +215,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         return null;
     }
     
-    public ArrayList<Servicio> getServiciosSeleccionados() {
+    private ArrayList<Servicio> getServiciosSeleccionados() {
         ArrayList<Servicio> servicios = new ArrayList<Servicio>();
         
         if (this.jCheckBoxServicioRecogidaTienda.isSelected()) {
@@ -176,6 +235,40 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         }
         
         return servicios;
+    }
+    
+    private boolean algunDatoIntroducido() {
+        if(!this.jTextFieldCodigo.getText().trim().isEmpty()) {
+            return true;
+        } else if(!this.jTextFieldDenominacion.getText().trim().isEmpty()) {
+            return true;
+        } else if(Gama.nombreGamaToEnum((String)this.jComboBoxGama.getSelectedItem()) != null) {
+            return true;
+        } else if(!this.jTextFieldMarca.getText().trim().isEmpty()) {
+            return true;
+        } else if(!this.jTextFieldPrecio.getText().trim().isEmpty()) {
+            return true;
+        } else if(!this.jTextFieldStock.getText().trim().isEmpty()) {
+            return true;
+        } else if(EficienciaEnergetica.nombreEficienciaEnergeticaToEnum((String)this.jComboBoxClaseEnergetica.getSelectedItem()) != null) {
+            return true;
+        } else if(this.controladorInventario.fechaEntradaModificada((Date)this.jSpinnerFechaEntrada.getValue())) {
+            return true;
+        } else if(getGarantiaSeleccionada() != null) {
+            return true;
+        } else if(getEstadoSeleccionado() != null) {
+            return true;
+        } else if(!getServiciosSeleccionados().isEmpty()) {
+            return true;
+        } else if(!this.jTextAreaCaracteristicas.getText().trim().isEmpty()) {
+            return true;
+        }
+        
+        return false;
+    }
+    
+    private void salir() {
+        this.controladorInventario.cerrarModalAltaArticulo(algunDatoIntroducido());
     }
 
     /**
@@ -230,7 +323,12 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         jButtonSalir = new javax.swing.JButton();
         jButtonGuardar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Identificación", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
         jPanel1.setToolTipText("");
@@ -244,6 +342,12 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Marca:");
+
+        jTextFieldCodigo.setToolTipText("El código del artículo.");
+
+        jTextFieldDenominacion.setToolTipText("La denominación del artículo.");
+
+        jTextFieldMarca.setToolTipText("La marca del artículo.");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -293,7 +397,12 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Fecha de entrada:");
 
+        jTextFieldPrecio.setToolTipText("El precio unitario en euros del artículo.");
+
+        jTextFieldStock.setToolTipText("El stock disponible del artículo.");
+
         jSpinnerFechaEntrada.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(), null, new java.util.Date(), java.util.Calendar.DAY_OF_MONTH));
+        jSpinnerFechaEntrada.setToolTipText("La fecha de entrada del artículo.");
         jSpinnerFechaEntrada.setEditor(new javax.swing.JSpinner.DateEditor(jSpinnerFechaEntrada, "dd/MM/yyyy"));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -343,7 +452,12 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Clase energética:");
 
+        jComboBoxGama.setToolTipText("La gama del artículo.");
+
+        jComboBoxTipo.setToolTipText("El tipo del artículo.");
         jComboBoxTipo.setEnabled(false);
+
+        jComboBoxClaseEnergetica.setToolTipText("La clase de eficiencia energética del artículo.");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -386,12 +500,15 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
 
         buttonGroupGarantia.add(jRadioButtonGarantia3anios);
         jRadioButtonGarantia3anios.setText("3 años (garantia legal)");
+        jRadioButtonGarantia3anios.setToolTipText("Si el artículo cuenta con una garantía de 3 años.");
 
         buttonGroupGarantia.add(jRadioButtonGarantia5anios);
         jRadioButtonGarantia5anios.setText("5 años (garantía ampliada)");
+        jRadioButtonGarantia5anios.setToolTipText("Si el artículo cuenta con una garantía de 5 años.");
 
         buttonGroupGarantia.add(jRadioButtonGarantia1anios);
         jRadioButtonGarantia1anios.setText("1 año (artículo de segunda mano)");
+        jRadioButtonGarantia1anios.setToolTipText("Si el artículo cuenta con una garantía de 1 años.");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -420,12 +537,16 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Servicios asociados a la venta", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 102, 153))); // NOI18N
 
         jCheckBoxServicioRecogidaTienda.setText("Recogida en tienda");
+        jCheckBoxServicioRecogidaTienda.setToolTipText("Si se desea recoger en tienda el artículo.");
 
         jCheckBoxServicioInstalacion.setText("Instalación y puesta en marcha");
+        jCheckBoxServicioInstalacion.setToolTipText("Si se desea instalar y poner en marcha el artículo.");
 
         jCheckBoxServicioRetiradaUsado.setText("Retirada del aparato usado (RAEE)");
+        jCheckBoxServicioRetiradaUsado.setToolTipText("Si se desea retirar el aparato usado al que va a sustituir el artículo.");
 
         jCheckBoxServicioEntregaDomicilio.setText("Entrega a domicilio");
+        jCheckBoxServicioEntregaDomicilio.setToolTipText("Si se desea entregar a domicilio el artículo.");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -440,7 +561,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
                         .addComponent(jCheckBoxServicioEntregaDomicilio))
                     .addComponent(jCheckBoxServicioInstalacion)
                     .addComponent(jCheckBoxServicioRetiradaUsado))
-                .addContainerGap(124, Short.MAX_VALUE))
+                .addContainerGap(125, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -460,13 +581,16 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
 
         buttonGroupEstadoArticulo.add(jRadioButtonEstadoNuevo);
         jRadioButtonEstadoNuevo.setText("Nuevo");
+        jRadioButtonEstadoNuevo.setToolTipText("Si el artículo es nuevo.");
 
         buttonGroupEstadoArticulo.add(jRadioButtonEstadoReacondicionado);
         jRadioButtonEstadoReacondicionado.setText("Reacondicionado");
+        jRadioButtonEstadoReacondicionado.setToolTipText("Si el artículo es reacondicionado.");
         jRadioButtonEstadoReacondicionado.addActionListener(this::jRadioButtonEstadoReacondicionadoActionPerformed);
 
         buttonGroupEstadoArticulo.add(jRadioButtonEstadoOferta);
         jRadioButtonEstadoOferta.setText("Oferta");
+        jRadioButtonEstadoOferta.setToolTipText("Si el artículo está de oferta.");
         jRadioButtonEstadoOferta.addActionListener(this::jRadioButtonEstadoOfertaActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -497,6 +621,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
 
         jTextAreaCaracteristicas.setColumns(20);
         jTextAreaCaracteristicas.setRows(5);
+        jTextAreaCaracteristicas.setToolTipText("La descripción del artículo.");
         jScrollPane1.setViewportView(jTextAreaCaracteristicas);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
@@ -516,8 +641,10 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         );
 
         jButtonSalir.setText("Salir");
+        jButtonSalir.setToolTipText("Salir de esta pantalla.");
 
         jButtonGuardar.setText("Guardar");
+        jButtonGuardar.setToolTipText("Dar de alta este artículo.");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -536,7 +663,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)))
+                            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)))
                     .addComponent(jSeparator1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -584,6 +711,10 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     private void jRadioButtonEstadoOfertaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonEstadoOfertaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonEstadoOfertaActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        salir();
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

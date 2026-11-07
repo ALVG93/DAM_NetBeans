@@ -8,6 +8,10 @@ public class ArticuloPAE extends Articulo {
     public ArticuloPAE() {
     }
 
+    public ArticuloPAE(GamaPAE tipo) {
+        this.tipo = tipo;
+    }
+
     public GamaPAE getTipo() {
         return this.tipo;
     }
@@ -18,8 +22,6 @@ public class ArticuloPAE extends Articulo {
     
     @Override
     public String toString() {
-        return "--- DATOS DEL ARTÍCULO CAPTURADO ---\n" + 
-                "tipo: " + this.tipo.getNombreTipo() + '\n' +
-                super.toString();
+        return super.toString(this.tipo.getNombreTipo());
     }
 }
