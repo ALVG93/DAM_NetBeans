@@ -28,7 +28,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }
     
     private void cargarIconoMarco() {     
-        URL urlIcono = getClass().getClassLoader().getResource("images/icono_electrohogar.png");
+        URL urlIcono = getClass().getClassLoader().getResource(
+                "images/icono_electrohogar.png");
 
         if (urlIcono != null) {
             Image icono = new ImageIcon(urlIcono).getImage();
@@ -39,7 +40,8 @@ public class InterfazPrincipal extends javax.swing.JFrame {
     }
     
     private void cargarLogo() {
-        URL urlIcono = getClass().getClassLoader().getResource("images/logo_electrohogar.png");
+        URL urlIcono = getClass().getClassLoader().getResource(
+                "images/logo_electrohogar.png");
         
         if (urlIcono != null) {
             Icon icono = new ImageIcon(urlIcono);

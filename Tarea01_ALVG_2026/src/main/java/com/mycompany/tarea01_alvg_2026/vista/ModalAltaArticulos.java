@@ -43,28 +43,36 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         if(!this.controladorInventario.codigoValido(this.jTextFieldCodigo.getText().trim())) {
             this.jTextFieldCodigo.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.denominacionValida(this.jTextFieldDenominacion.getText().trim())) {
+        } else if(!this.controladorInventario.denominacionValida(
+                this.jTextFieldDenominacion.getText().trim())) {
             this.jTextFieldDenominacion.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.gamaValida((String)this.jComboBoxGama.getSelectedItem())) {
+        } else if(!this.controladorInventario.gamaValida(
+                (String)this.jComboBoxGama.getSelectedItem())) {
             this.jComboBoxGama.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.tipoValido((String)this.jComboBoxTipo.getSelectedItem())) {
+        } else if(!this.controladorInventario.tipoValido(
+                (String)this.jComboBoxTipo.getSelectedItem())) {
             this.jComboBoxTipo.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.marcaValida(this.jTextFieldMarca.getText().trim())) {
+        } else if(!this.controladorInventario.marcaValida(
+                this.jTextFieldMarca.getText().trim())) {
             this.jTextFieldMarca.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.precioValido(this.jTextFieldPrecio.getText().trim())) {
+        } else if(!this.controladorInventario.precioValido(
+                this.jTextFieldPrecio.getText().trim())) {
             this.jTextFieldPrecio.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.stockValido(this.jTextFieldStock.getText().trim())) {
+        } else if(!this.controladorInventario.stockValido(
+                this.jTextFieldStock.getText().trim())) {
             this.jTextFieldStock.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.claseEnergeticaValida((String)this.jComboBoxClaseEnergetica.getSelectedItem())) {
+        } else if(!this.controladorInventario.claseEnergeticaValida(
+                (String)this.jComboBoxClaseEnergetica.getSelectedItem())) {
             this.jComboBoxClaseEnergetica.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.fechaEntradaValida((Date)this.jSpinnerFechaEntrada.getValue())) {
+        } else if(!this.controladorInventario.fechaEntradaValida(
+                (Date)this.jSpinnerFechaEntrada.getValue())) {
             this.jSpinnerFechaEntrada.requestFocusInWindow();
             return false;
         } else if(!this.controladorInventario.garantiaValida(getGarantiaSeleccionada())) {
@@ -76,7 +84,8 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
         } else if(!this.controladorInventario.serviciosValidos(getServiciosSeleccionados())) {
             this.jCheckBoxServicioRecogidaTienda.requestFocusInWindow();
             return false;
-        } else if(!this.controladorInventario.descripcionValida(this.jTextAreaCaracteristicas.getText().trim())) {
+        } else if(!this.controladorInventario.descripcionValida(
+                this.jTextAreaCaracteristicas.getText().trim())) {
             this.jTextAreaCaracteristicas.requestFocusInWindow();
             return false;
         }
@@ -90,13 +99,16 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
             
             switch(gama){
                 case BLANCA:
-                    this.nuevoArticulo = new ArticuloBlanco(GamaBlanca.nombreTipoToEnum((String)this.jComboBoxTipo.getSelectedItem()));
+                    this.nuevoArticulo = new ArticuloBlanco(GamaBlanca.nombreTipoToEnum(
+                            (String)this.jComboBoxTipo.getSelectedItem()));
                     break;
                 case MARRON:
-                    this.nuevoArticulo = new ArticuloMarron(GamaMarron.nombreTipoToEnum((String)this.jComboBoxTipo.getSelectedItem()));
+                    this.nuevoArticulo = new ArticuloMarron(GamaMarron.nombreTipoToEnum(
+                            (String)this.jComboBoxTipo.getSelectedItem()));
                     break;
                 case PAE:
-                    this.nuevoArticulo = new ArticuloPAE(GamaPAE.nombreTipoToEnum((String)this.jComboBoxTipo.getSelectedItem()));
+                    this.nuevoArticulo = new ArticuloPAE(GamaPAE.nombreTipoToEnum(
+                            (String)this.jComboBoxTipo.getSelectedItem()));
                     break;
             }
             
@@ -111,16 +123,22 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     private void guardarDatosComunes() {
         this.nuevoArticulo.setCodigo(this.jTextFieldCodigo.getText().trim());
         this.nuevoArticulo.setDenominacion(this.jTextFieldDenominacion.getText().trim());
-        this.nuevoArticulo.setGama(Gama.nombreGamaToEnum((String)this.jComboBoxGama.getSelectedItem()));
+        this.nuevoArticulo.setGama(Gama.nombreGamaToEnum(
+                (String)this.jComboBoxGama.getSelectedItem()));
         this.nuevoArticulo.setMarca(this.jTextFieldMarca.getText().trim());
-        this.nuevoArticulo.setPrecio(Double.parseDouble(this.jTextFieldPrecio.getText().trim()));
-        this.nuevoArticulo.setStock(Integer.parseInt(this.jTextFieldStock.getText().trim()));
-        this.nuevoArticulo.setClaseEnergetica(EficienciaEnergetica.nombreEficienciaEnergeticaToEnum((String)this.jComboBoxClaseEnergetica.getSelectedItem()));
+        this.nuevoArticulo.setPrecio(Double.parseDouble(
+                this.jTextFieldPrecio.getText().trim()));
+        this.nuevoArticulo.setStock(Integer.parseInt(
+                this.jTextFieldStock.getText().trim()));
+        this.nuevoArticulo.setClaseEnergetica(
+                EficienciaEnergetica.nombreEficienciaEnergeticaToEnum(
+                        (String)this.jComboBoxClaseEnergetica.getSelectedItem()));
         this.nuevoArticulo.setFechaEntrada((Date)this.jSpinnerFechaEntrada.getValue());
         this.nuevoArticulo.setGarantia(getGarantiaSeleccionada());
         this.nuevoArticulo.setEstado(getEstadoSeleccionado());
         this.nuevoArticulo.setServicios(getServiciosSeleccionados());
-        this.nuevoArticulo.setCaracteristicas(this.jTextAreaCaracteristicas.getText().trim());
+        this.nuevoArticulo.setCaracteristicas(
+                this.jTextAreaCaracteristicas.getText().trim());
     }
     
     private void limpiarFormulario() {
@@ -148,7 +166,8 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     }
     
     private void cargarComboBoxGama() {
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(Gama.toArrayNombresGama());
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(
+                Gama.toArrayNombresGama());
         modelo.insertElementAt("-- Seleccione gama --", 0);
         
         this.jComboBoxGama.setModel(modelo);
@@ -176,7 +195,8 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
     }
     
     private void cargarComboBoxEficienciaEnergetica() {
-        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(EficienciaEnergetica.toArrayNombresEficienciaEnergetica());
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(
+                EficienciaEnergetica.toArrayNombresEficienciaEnergetica());
         modelo.insertElementAt("-- Seleccione --", 0);
         
         this.jComboBoxClaseEnergetica.setModel(modelo);
@@ -242,7 +262,8 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
             return true;
         } else if(!this.jTextFieldDenominacion.getText().trim().isEmpty()) {
             return true;
-        } else if(Gama.nombreGamaToEnum((String)this.jComboBoxGama.getSelectedItem()) != null) {
+        } else if(Gama.nombreGamaToEnum(
+                (String)this.jComboBoxGama.getSelectedItem()) != null) {
             return true;
         } else if(!this.jTextFieldMarca.getText().trim().isEmpty()) {
             return true;
@@ -250,9 +271,11 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
             return true;
         } else if(!this.jTextFieldStock.getText().trim().isEmpty()) {
             return true;
-        } else if(EficienciaEnergetica.nombreEficienciaEnergeticaToEnum((String)this.jComboBoxClaseEnergetica.getSelectedItem()) != null) {
+        } else if(EficienciaEnergetica.nombreEficienciaEnergeticaToEnum(
+                (String)this.jComboBoxClaseEnergetica.getSelectedItem()) != null) {
             return true;
-        } else if(this.controladorInventario.fechaEntradaModificada((Date)this.jSpinnerFechaEntrada.getValue())) {
+        } else if(this.controladorInventario.fechaEntradaModificada(
+                (Date)this.jSpinnerFechaEntrada.getValue())) {
             return true;
         } else if(getGarantiaSeleccionada() != null) {
             return true;
