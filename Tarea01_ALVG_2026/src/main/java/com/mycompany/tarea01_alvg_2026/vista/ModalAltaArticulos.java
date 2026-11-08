@@ -127,7 +127,7 @@ public class ModalAltaArticulos extends javax.swing.JDialog {
                 (String)this.jComboBoxGama.getSelectedItem()));
         this.nuevoArticulo.setMarca(this.jTextFieldMarca.getText().trim());
         this.nuevoArticulo.setPrecio(Double.parseDouble(
-                this.jTextFieldPrecio.getText().trim()));
+                this.jTextFieldPrecio.getText().trim().replaceAll(",", ".")));
         this.nuevoArticulo.setStock(Integer.parseInt(
                 this.jTextFieldStock.getText().trim()));
         this.nuevoArticulo.setClaseEnergetica(

@@ -51,7 +51,7 @@ public class ControladorInventario {
         if (denominacion.isEmpty()) {
             mostrarError("Se debe registrar una denominación.");
             return false;
-        } else if(denominacion.length() > 8) {
+        } else if(denominacion.length() > 25) {
             mostrarError("La denominacion no puede tener más de 25 caracteres.");
             return false;
         }
