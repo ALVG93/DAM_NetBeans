@@ -109,11 +109,14 @@ public class ControladorInventario {
         }
         
         int posicionPunto = precioString.replaceAll(",", ".").indexOf(".");
-        int cantidadDecimales = precioString.length() - posicionPunto - 1;
+        
+        if(posicionPunto != -1) {
+            int cantidadDecimales = precioString.length() - posicionPunto - 1;
 
-        if (cantidadDecimales > 2) {
-            mostrarError("El precio no puede tener más de 2 decimales.");
-            return false;
+            if (cantidadDecimales > 2) {
+                mostrarError("El precio no puede tener más de 2 decimales.");
+                return false;
+            }
         }
         
         if (precio < 0) {
